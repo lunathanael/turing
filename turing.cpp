@@ -8,6 +8,53 @@ using namespace std;
 
 static constexpr int64_t HALT = -1;
 
+class List {
+private:
+	struct Node {
+		Node* prev;
+		Node* next;
+		bool data;
+		Node(Node* passed_prev, Node* passed_next, Node* passed_data) : prev(passed_prev), next(passed_next), data(passed_data) {}
+	};
+	Node* front = new Node(nullptr, nullptr, 0);
+	Node* back = new Node(nullptr, nullptr, 0);
+	Node* curr;
+public:
+	List() {
+		front->next = back;
+		back->prev = front;
+		curr = front;
+	}
+	void insert_node(bool direction, bool val) {
+		curr->data = val;
+		if(direction) {
+			if(!curr->next){
+				curr->next = new Node(curr, nullptr, 0);
+				back = curr->next;
+			}
+			curr = curr->next;
+		}
+		else {
+			if(!curr->prev) {
+				curr->prev = new Node(nullptr, curr, 0);
+				front = curr->prev;
+			}
+			curr = curr->prev;
+		}
+	}
+	void print_list() {
+		Node*temp = front;
+		while(temp) {
+			cout << temp->data << ' ';
+			temp = temp->next;
+		}
+		cout << '\n';
+	}
+	bool get_curr_data() {
+		return curr->data;
+	}
+};
+
 class result {
 private:
 	int64_t state;
@@ -89,25 +136,20 @@ template <typename T> result turing_function(T &state) {
 
 class Turing {
 private:
-	uint64_t state_count;
+	const uint64_t state_count;
 
 	uint64_t cycles;
 	int64_t head;
 	int64_t state;
-	unordered_map<int64_t, bool> tape;
+	List tape;
 	vector<State> state_table[2];
 
-	int64_t lower;
-	int64_t upper;
-
 public:
-	Turing(const uint64_t passed_states, const int64_t passed_initial_state, vector<State> &passed_state_table) {
-		state_count = passed_states;
+	Turing(const uint64_t passed_states, const int64_t passed_initial_state, vector<State> &passed_state_table) : state_count(passed_states) {
 		head = 0;
 		state = passed_initial_state;
 
-		lower = -1;
-		upper = 1;
+		List();
 
 		for (int i = 0; i < 2; ++i) {
 			for(int j = 0; j < state_count; ++j) {
@@ -127,18 +169,14 @@ public:
 	}
 
 	bool next_cycle() {
-		State &current_state = state_table[tape[head]][state];
+		State &current_state = state_table[tape.get_curr_data()][state];
 		result res = turing_function(current_state);
 
-		tape[head] = res.get_symbol();
-		if(res.get_move_tape()) ++head;
-		else --head;
+		tape.insert_node(res.get_move_tape(), res.get_symbol());
 		state = res.get_state();
 
 		++cycles;
 
-		lower = min(lower, head);
-		upper = max(upper, head);
 		if(state == HALT) return false;
 		return true;
 	}
@@ -152,10 +190,7 @@ public:
 	}
 
 	void print_tape() {
-		for(int64_t i = lower; i <= upper; ++i) {
-			cout << tape[i] << ' ';
-		}
-		cout << '\n';
+		tape.print_list();
 	}
 
 
@@ -207,7 +242,7 @@ int main() {
 	Turing machine1(state_count, 0, state_table);
 
 
-	while(machine1.next_cycle())machine1.print_tape();
+	while(machine1.next_cycle()) machine1.print_tape();
 	machine1.print_tape();
 
 	return 1;
