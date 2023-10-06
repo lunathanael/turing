@@ -1,8 +1,5 @@
 #include<iostream>
 #include<vector>
-#include<map>
-#include<unordered_map>
-#include <algorithm>
 
 using namespace std;
 
@@ -17,12 +14,9 @@ private:
 		Node(Node* passed_prev, Node* passed_next, Node* passed_data) : prev(passed_prev), next(passed_next), data(passed_data) {}
 	};
 	Node* front = new Node(nullptr, nullptr, 0);
-	Node* back = new Node(nullptr, nullptr, 0);
 	Node* curr;
 public:
 	List() {
-		front->next = back;
-		back->prev = front;
 		curr = front;
 	}
 	void insert_node(bool direction, bool val) {
@@ -30,7 +24,6 @@ public:
 		if(direction) {
 			if(!curr->next){
 				curr->next = new Node(curr, nullptr, 0);
-				back = curr->next;
 			}
 			curr = curr->next;
 		}
