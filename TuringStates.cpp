@@ -62,12 +62,17 @@ namespace TuringStates {
 		next_state = passed_next_state;
 	}
 
-	void State::print_state() {
-		std::cout << current_state << ' ';
-		std::cout << scanned_symbol << ' ';
+	void State::print_state(const bool debug) {
+		if(debug) {
+			std::cout << current_state << ' ';
+			std::cout << scanned_symbol << ' ';
+		}
 
 		std::cout << print_symbol << ' ';
 		std::cout << move_tape << ' ';
-		std::cout << next_state << '\t';
+		if(next_state != -1) {
+			std::cout << next_state << '\t';
+		}
+		else std::cout << 'h' << '\t';
 	}
 }

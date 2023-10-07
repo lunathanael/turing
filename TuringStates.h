@@ -48,7 +48,7 @@ namespace TuringStates {
 		void set_move_tape(const bool passed_move_tape);
 		void set_next_state(const int64_t passed_next_state);
 
-		void print_state();
+		void print_state(const bool debug);
 	};
 }
 

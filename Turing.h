@@ -31,7 +31,7 @@ namespace Turing {
 
 		void parse_five_tuple_state_table(const std::string input);
 
-		void print_state_table();
+		void print_state_table(bool debug=false);
 
 		bool next_cycle();
 
