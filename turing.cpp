@@ -81,6 +81,10 @@ namespace Turing {
 		return cycles;
 	}
 
+	int64_t TuringMachine::get_state() {
+		return state;
+	}
+
 	void TuringMachine::print_tape() {
 		tape.print_list();
 	}

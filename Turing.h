@@ -39,6 +39,8 @@ namespace Turing {
 
 		uint64_t get_cycles();
 
+		int64_t get_state();
+
 		void print_tape();
 	};
 }
