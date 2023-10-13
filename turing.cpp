@@ -85,7 +85,10 @@ namespace Turing {
 		return state;
 	}
 
-	void TuringMachine::print_tape() {
-		tape.print_list();
+	void TuringMachine::print_tape(bool print_state) {
+		if(print_state)
+			tape.print_list(get_state());
+		else 
+			tape.print_list();
 	}
 }

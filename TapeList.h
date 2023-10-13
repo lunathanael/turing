@@ -4,6 +4,9 @@
 
 #include <iostream>
 
+static constexpr int64_t HALT = -1;
+static constexpr int64_t NOSTATE = -2;
+
 namespace TapeList {
 	class List {
 	private:
@@ -18,7 +21,7 @@ namespace TapeList {
 	public:
 		List();
 		void insert_node(bool direction, bool val);
-		void print_list();
+		void print_list(int64_t state = NOSTATE);
 		bool get_curr_data();
 	};
 }

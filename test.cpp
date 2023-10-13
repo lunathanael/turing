@@ -15,7 +15,7 @@ int main() {
     machine1.print_state_table();
 
     // Simulate the Turing machine one step at a time until it halts.
-    while (machine1.next_cycle());
+    while (machine1.next_cycle()) machine1.print_tape();
 
     // Print the final content of the tape.
     machine1.print_tape();

@@ -8,7 +8,6 @@
 #include "TapeList.h"
 
 namespace Turing {
-	static constexpr int64_t HALT = -1;
 
 	template <typename T> TuringStates::Output turing_function(T &state) {
 		TuringStates::Output res(state.get_print_symbol(), state.get_move_tape(), state.get_next_state());
@@ -41,7 +40,7 @@ namespace Turing {
 
 		int64_t get_state();
 
-		void print_tape();
+		void print_tape(bool print_state = true);
 	};
 }
 

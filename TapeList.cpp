@@ -23,12 +23,23 @@ namespace TapeList {
 			curr = curr->prev;
 		}
 	}
-	void List::print_list() {
+	void List::print_list(int64_t state) {
 		Node*temp = front;
 		while(temp) {
 			std::cout << temp->data << ' ';
 			temp = temp->next;
 		}
+
+		if(state != NOSTATE) {
+			std::cout << "State: ";
+			if(state == HALT) {
+				std::cout << 'H';
+			}
+			else {
+				std::cout << static_cast<char>('a' + state);
+			}
+		}
+
 		std::cout << '\n';
 
 		temp = front;
